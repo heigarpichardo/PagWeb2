@@ -19,3 +19,4 @@ Route::resource('direccion/ciudades','CiudadController');
 Route::resource('procesos/inscripcion','InscripcionController');
 Route::resource('procesos/cobros','CobrosController');
 Route::resource('registro/estudiante','EstudianteController');
+Route::resource('Mantenimientos/Servicios','ServiciosController');

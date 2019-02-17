@@ -59,7 +59,8 @@ class InscripcionController extends Controller
     public function create()
     {
         //$estudiante=Estudiantes::findOrFail($id);
-    	return view("procesos.inscripcion.create",["estudiante"=>Estudiantes::findOrFail(1)]);
+    	//return view("procesos.inscripcion.create",["estudiante"=>Estudiantes::findOrFail(1)]);
+        return view("procesos.inscripcion.create");
     }
     public function store(InscripcionFormRequest $request)
     {
@@ -108,11 +109,11 @@ class InscripcionController extends Controller
     }
     public function show($id)
     {
-    	//return view("procesos.inscripcion.show",["ciudad"=>ciudad::findOrFail($id)]);
+    	return view("procesos.inscripcion.show",["ciudad"=>ciudad::findOrFail($id)]);
     }
     public function edit($id)
     {
-    	//return view("procesos.inscripcion.edit",["ciudad"=>ciudad::findOrFail($id)]);
+    	return view("procesos.inscripcion.edit",["ciudad"=>ciudad::findOrFail($id)]);
     }
     public function update(InscripcionFormRequest $request,$id)
     {
