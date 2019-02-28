@@ -5,82 +5,65 @@ namespace SisServicios\Http\Controllers;
 use SisServicios\Condiciones;
 use Illuminate\Http\Request;
 
+use SisServicios\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
+use SisServicios\Http\Requests\TipoPersonaFormRequest;
+use DB;
+
 class CondicionesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+public function index(Request $request)
     {
-        //
+        if ($request)
+        {
+            $query=trim($request->get('searchText'));
+            $Tipo_Persona=DB::table('Tipo_Persona')
+            ->where('descripcion','like','%'.$query.'%')
+            ->where('estado','=',1)
+            ->orderby('codigo_tipo_persona','desc')
+            ->paginate(5);    
+            return view('Mantenimientos.Tipopersona.index',["Tipo_Persona"=>$Tipo_Persona,"searchText"=>$query]);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
-        return view("Mantenimientos.Condiciones.create");
+        return view("Mantenimientos.Tipopersona.create");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(TipoPersonaFormRequest $request)
     {
-        //
+        $Tipopersona=new TipoPersona;
+        $Tipopersona->descripcion=$request->get('descripcion');
+        $Tipopersona->estado=(1);
+        $Tipopersona->save();
+
+        return redirect::to('Mantenimientos\Tipopersona');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \SisServicios\Condiciones  $condiciones
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Condiciones $condiciones)
+    public function show($id)
     {
-        //
+        return view("Mantenimientos.Tipopersona.show",["Tipo_Persona"=>TipoPersona::findOrFail($id)]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \SisServicios\Condiciones  $condiciones
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Condiciones $condiciones)
+    public function edit($id)
     {
-        //
+        return view("Mantenimientos.Tipopersona.edit",["Tipo_Persona"=>TipoPersona::findOrFail($id)]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \SisServicios\Condiciones  $condiciones
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Condiciones $condiciones)
+    public function update(TipoPersonaFormRequest $request,$id)
     {
-        //
+        $tipopersona=TipoPersona::findorfail($id);
+        $tipopersona->descripcion=$request->get('descripcion');
+        $tipopersona->update();
+        return redirect::to('Mantenimientos\Tipopersona');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \SisServicios\Condiciones  $condiciones
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Condiciones $condiciones)
+    public function destroy($id)
     {
-        //
+        $tipopersona=TipoPersona::findorfail($id);
+        $tipopersona->estado=(0);
+        $tipopersona->update();
+        return redirect::to('Mantenimientos\Tipopersona');
     }
 }

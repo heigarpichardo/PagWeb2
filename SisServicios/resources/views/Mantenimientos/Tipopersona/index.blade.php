@@ -18,9 +18,10 @@
 				@foreach($Tipo_Persona as $cat)
 				<tr>
 					<td>{{ $cat->codigo_tipo_persona}}</td>
-					<td>{{ $cat->descripcion}}</td>				
+					<td>{{ $cat->descripcion}}</td>
 					<td>
-						<a href="{{URL::action('TipoPersonaController@create',$cat->codigo_tipo_persona)}}"><button class="btn btn-info">Seleccionar</button></a>
+						<a href="{{URL::action('TipoPersonaController@edit',$cat->codigo_tipo_persona)}}"><button class="btn btn-info">Editar</button></a>
+						<a href="" data-target="#modal-delete-{{$cat->codigo_tipo_persona}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
 					</td>
 				</tr>
 				@include('Mantenimientos.Tipopersona.modal')

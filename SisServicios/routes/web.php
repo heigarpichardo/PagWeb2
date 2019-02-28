@@ -25,3 +25,4 @@ Route::resource('registro/estudiante','EstudianteController');
 Route::resource('Mantenimientos/Servicios','ServiciosController');
 Route::resource('Mantenimientos/Condiciones','CondicionesController');
 Route::resource('Mantenimientos/Tipopersona','TipoPersonaController');
+Route::resource('Mantenimientos/Tasaitbis','TasaItbisController');
