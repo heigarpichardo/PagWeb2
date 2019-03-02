@@ -26,3 +26,4 @@ Route::resource('Mantenimientos/Servicios','ServiciosController');
 Route::resource('Mantenimientos/Condiciones','CondicionesController');
 Route::resource('Mantenimientos/Tipopersona','TipoPersonaController');
 Route::resource('Mantenimientos/Tasaitbis','TasaItbisController');
+Route::resource('Mantenimientos/Tipotelefono','TipoTelefonoController');
