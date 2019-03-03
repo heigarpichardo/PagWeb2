@@ -6,27 +6,27 @@
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
 				<ul>
-				@foreach ($errors->all() as $error)
+				<?php foreach ($errors->all() as $error){ ?>
 					<li>{{$error}}</li>
-				@endforeach
+				<?php } ?>
 				</ul>
 			</div>
 			@endif
 
-			{!!Form::open(array('url'=>'Mantenimientos/Servicios','method'=>'POST','autocomplete'=>'off'))!!}
+			{!!Form::open(array('url'=>'Mantenimientos/Servicios','method'=>'POST','autocomplete'=>'off', 'files'=>'true'))!!}
 			{!!Form::token()!!}
 			<div class="form-group">
 				<label for="nombre">Descripcion</label>
 				<input type="text" name="descripcion" class="form-control" placeholder="Descripcion...">
 			</div>
 				<div class="form-group">
-				<label for="nombre">Tasas</label>
-				<select name="codigo_tasa" class="form-control">
-					@foreach ($servicio s $cat)
-						<option value="{{$cat ->codigo_tasa}}"> {{$cat ->descripcion}} </option>
-					@endforeach
+				<label>Tasas</label>
+				<select name="codigo_tasa" class="form-control" style="width: 100px">
+					<?php foreach ($tasa_itbis as $cat) {  ?>
+						<option value= "{{$cat->codigo_tasa}}"> {{$cat->descripcion}} </option>
+					<?php } ?>
 				</select>
-			</div>
+			</div> 
 			<div class="form-group">
 				<button class="btn btn-primary" type="submit">Guardar</button>
 				<button class="btn btn-danger" type="reset">Cancelar</button>

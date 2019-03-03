@@ -29,15 +29,15 @@ class ServiciosController extends Controller
     public function create()
     {	
     	
-
-        return view("Mantenimientos.Servicios.create");
+    	$tasas=DB::table('tasa_itbis')-> get();
+        return view("Mantenimientos.Servicios.create",["tasa_itbis"=>$tasas]);
     }
 
     public function store(ServiciosFormRequest $request)
     {
         $store=new Servicios;
         $store->descripcion=$request->get('descripcion');
-      //  $store->codigo_tasa=$request->get('codigo_tasa');
+        $store->codigo_tasa=$request->get('codigo_tasa');
         $store->estado=(1);
         $store->save();
 
@@ -51,14 +51,15 @@ class ServiciosController extends Controller
 
     public function edit($id)
     {
-        return view("Mantenimientos.Servicios.edit",["edit"=>Servicios::findOrFail($id)]);
+    	$tasas=DB::table('tasa_itbis')-> get();
+        return view("Mantenimientos.Servicios.edit",["edit"=>Servicios::findOrFail($id)],["tasa_itbis"=>$tasas]);
     }
 
     public function update(TipoTelefonoFormRequest $request,$id)
     {
         $update=Servicios::findorfail($id);
         $update->descripcion=$request->get('descripcion');
-        //$update->descripcion=$request->get('codigo_tasa');
+        $update->descripcion=$request->get('codigo_tasa');
         $update->update();
         
         return redirect::to('Mantenimientos\Servicios');
