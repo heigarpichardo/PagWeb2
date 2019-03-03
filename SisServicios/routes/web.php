@@ -12,8 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    return view('/home');
 });
+
+Route::get('/admin', function () {
+    return view('/layouts/admin');
+});
+
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+
+//Route::get('/layouts/admin');
 
 Route::resource('direccion/ciudades','CiudadController');
 
