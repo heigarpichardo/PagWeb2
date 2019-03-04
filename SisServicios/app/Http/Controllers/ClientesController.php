@@ -3,26 +3,29 @@
 namespace SisServicios\Http\Controllers;
 
 use Illuminate\Http\Request;
-use SisServicios\Servicios;
+use SisServicios\Clientes;
 
 use SisServicios\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
-use SisServicios\Http\Requests\ServiciosFormRequest;
+use SisServicios\Http\Requests\ClientesFormRequest;
 use DB;
 
-class ServiciosController extends Controller
+
+class ClientesController extends Controller
 {
-    public function index(Request $request)
+     public function index(Request $request)
     {
         if ($request)
         {
             $query=trim($request->get('searchText'));
-            $index=DB::table('servicios')
-            ->where('descripcion','like','%'.$query.'%')
-            ->where('estado','=','1')
-            ->orderby('codigo_servicio','desc')
+            $index=DB::table('clientes')
+            //->selectraw("CONCAT('personas.nombre',' ','clientes.apellido') as nombre, apellido,balance,limite_credito")
+            ->join('personas', 'personas.codigo_persona', '=', 'clientes.codigo_persona')	
+           // ->orWhereRaw("CONCAT('personas.nombre',' ','clientes.apellido') LIKE ?",["%".$query."%"])
+           // ->where('and estado','=','1')
+            ->orderby('codigo_cliente','desc')
             ->paginate(5);
-            return view('Mantenimientos.Servicios.index',["index"=>$index,"searchText"=>$query]);
+            return view('Mantenimientos.Clientes.index',["index"=>$index,"searchText"=>$query]);
         }
     }
 

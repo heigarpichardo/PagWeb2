@@ -2,8 +2,8 @@
 @section ('contenido')
 <div class="row">
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-		<h3>Listado de Tipos de Servicios <a href="Servicios/create"> <button class="btn btn-success">Crear</button></h3></a>
-		@include('Mantenimientos.Servicios.search')
+		<h3>Listado de Telefonos <a href="Telefonos/create"> <button class="btn btn-success">Crear</button></h3></a>
+		@include('Mantenimientos.Telefonos.search')
 	</div>
 </div>
 
@@ -14,19 +14,19 @@
 				<thead>
 					<th>ID</th>
 					<th>Descripcion</th>
-					<th>Codigo Tasa</th>
+					<th>Tipo Telefono</th>
 				</thead>
 				<?php foreach ($index as $cat) { ?>
 				<tr>
 					<td>{{ $cat->codigo_servicio}}</td>
 					<td>{{ $cat->descripcion}}</td>
-					<td>{{ $cat->codigo_tasa}}</td>
+					<td>{{ $cat->tipo_telefono}}</td>
 					<td>
-						<a href="{{URL::action('ServiciosController@edit',$cat->codigo_servicio)}}"><button class="btn btn-info">Editar</button></a>
-						<a href="" data-target="#modal-delete-{{$cat->codigo_servicio}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
+						<a href="{{URL::action('TelefonosController@edit',$cat->codigo_telefono)}}"><button class="btn btn-info">Editar</button></a>
+						<a href="" data-target="#modal-delete-{{$cat->codigo_telefono}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
 					</td>
 				</tr>
-				@include('Mantenimientos.Servicios.modal')
+				@include('Mantenimientos.Telefonos.modal')
 				<?php } ?>
 			</table>
 		</div>
