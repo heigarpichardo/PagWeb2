@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     //return view('welcome');
-    return view('/home');
+    return view('auth/login');
 });
 
 Route::get('/admin', function () {
@@ -23,15 +23,12 @@ Route::get('/admin', function () {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::get('/layouts/admin');
-
 Route::resource('direccion/ciudades','CiudadController');
 
 Route::resource('procesos/inscripcion','InscripcionController');
 Route::resource('procesos/cobros','CobrosController');
 Route::resource('procesos/Servicios','ProServiciosController');
 
-Route::resource('registro/estudiante','EstudianteController');
 Route::resource('Mantenimientos/Servicios','ServiciosController');
 Route::resource('Mantenimientos/Condiciones','CondicionesController');
 Route::resource('Mantenimientos/Tipopersona','TipoPersonaController');
