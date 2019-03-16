@@ -14,8 +14,9 @@ class CiudadController extends Controller
 {
     public function _contructor()
     {
-
+        $this->middleware('auth');
     }
+    
     public function index(Request $request)
     {
     	if ($request)
