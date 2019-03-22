@@ -47,7 +47,7 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <small class="bg-red">Online</small>
-                  <span class="hidden-xs">Heigar Javier Pichardo</span>
+                  <span class="hidden-xs">{{Auth::user()->name}}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
@@ -62,9 +62,16 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     
-                    <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Cerrar</a>
-                    </div>
+                  <div class="pull-right">
+                  <a href="{{ route('logout') }}"
+                      onclick="event.preventDefault();
+                               document.getElementById('logout-form').submit();">
+                      <button type="button" class="btn btn-block btn-danger">Cerrar Session</button>         
+                  </a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      {{ csrf_field() }}
+                  </form>
+                </div>
                   </li>
                 </ul>
               </li>
