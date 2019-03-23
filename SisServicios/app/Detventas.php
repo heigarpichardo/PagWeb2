@@ -4,7 +4,7 @@ namespace SisServicios;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProServicios extends Model
+class Detventas extends Model
 {
     //
 }
