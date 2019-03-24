@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>HCServices</title>
+    <title>CHServices</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -27,9 +27,9 @@
         <!-- Logo -->
         <a href="index2.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>HC</b>V</span>
+          <span class="logo-mini"><b>CH</b>V</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>HCServices</b></span>
+          <span class="logo-lg"><b>CHServices</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -90,7 +90,7 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header"></li>
-            
+            <li><a href="/home"><i class="fa fa-th"></i><span>Inicio</span><i class="fa fa-angle-left pull-right"></i></a></li> 
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-laptop"></i>
@@ -98,10 +98,22 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
+                <?php $url = $_SERVER['REQUEST_URI']; ?>
+                <?php if ($_SERVER['REQUEST_URI'] == '/home') { ?>
                 <li><a href="direccion/ciudades"><i class="fa fa-circle-o"></i>Ciudad</a></li>
                 <li><a href="Mantenimientos/Tipopersona"><i class="fa fa-circle-o"></i>Tipo de Persona</a></li>
                 <li><a href="Mantenimientos/Tasaitbis"><i class="fa fa-circle-o"></i> Tasa Itbis</a></li>
                 <li><a href="Mantenimientos/Tipotelefono"><i class="fa fa-circle-o"></i> Tipo Telefono</a></li>
+                <li><a href="Mantenimientos/Servicios"><i class="fa fa-circle-o"></i> Servicios</a></li>
+                <li><a href="Mantenimientos/Clientes"><i class="fa fa-circle-o"></i> Clientes</a></li>
+              <?php } else { ?>
+                <li><a href="direccion/ciudades"><i class="fa fa-circle-o"></i>Ciudad</a></li>
+                <li><a href="Tipopersona"><i class="fa fa-circle-o"></i>Tipo de Persona</a></li>
+                <li><a href="Tasaitbis"><i class="fa fa-circle-o"></i> Tasa Itbis</a></li>
+                <li><a href="Tipotelefono"><i class="fa fa-circle-o"></i> Tipo Telefono</a></li>
+                <li><a href="Servicios"><i class="fa fa-circle-o"></i> Servicios</a></li>
+                <li><a href="Clientes"><i class="fa fa-circle-o"></i> Clientes</a></li>
+              <?php } ?>
               </ul>
             </li>
             
