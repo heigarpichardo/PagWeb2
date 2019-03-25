@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{asset('css/_all-skins.min.css')}}">
     <link rel="apple-touch-icon" href="{{asset('img/apple-touch-icon.png')}}">
     <link rel="shortcut icon" href="{{asset('img/favicon.ico')}}">
-
+    <link href="css/bootstrap.min.css" rel="stylesheet"> 
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -106,6 +106,7 @@
                 <li><a href="Mantenimientos/Tipotelefono"><i class="fa fa-circle-o"></i> Tipo Telefono</a></li>
                 <li><a href="Mantenimientos/Servicios"><i class="fa fa-circle-o"></i> Servicios</a></li>
                 <li><a href="Mantenimientos/Clientes"><i class="fa fa-circle-o"></i> Clientes</a></li>
+                <li><a href="Mantenimientos/Comprobantes"><i class="fa fa-circle-o"></i> Secuencias NCF</a></li>
               <?php } else { ?>
                 <li><a href="direccion/ciudades"><i class="fa fa-circle-o"></i>Ciudad</a></li>
                 <li><a href="Tipopersona"><i class="fa fa-circle-o"></i>Tipo de Persona</a></li>
@@ -113,6 +114,7 @@
                 <li><a href="Tipotelefono"><i class="fa fa-circle-o"></i> Tipo Telefono</a></li>
                 <li><a href="Servicios"><i class="fa fa-circle-o"></i> Servicios</a></li>
                 <li><a href="Clientes"><i class="fa fa-circle-o"></i> Clientes</a></li>
+                <li><a href="Comprobantes"><i class="fa fa-circle-o"></i> Secuencias NCF</a></li>
               <?php } ?>
               </ul>
             </li>

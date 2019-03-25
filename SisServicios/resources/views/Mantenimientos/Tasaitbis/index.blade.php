@@ -16,7 +16,7 @@
 					<th>Descripcion</th>
 					<th>Tasa</th>
 				</thead>
-				@foreach($tasa_itbis as $cat)
+				<?php foreach($tasa_itbis as $cat) { ?>
 				<tr>
 					<td>{{ $cat->codigo_tasa}}</td>
 					<td>{{ $cat->descripcion}}</td>
@@ -27,7 +27,7 @@
 					</td>
 				</tr>
 				@include('Mantenimientos.Tasaitbis.modal')
-				@endforeach
+			<?php } ?>
 			</table>
 		</div>
 		{{$tasa_itbis->render()}}
