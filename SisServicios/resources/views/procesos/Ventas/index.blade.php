@@ -2,8 +2,8 @@
 @section ('contenido')
 <div class="row">
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-		<h3>Listado de Clientes <a href="Servicios/create"> <button class="btn btn-success">Crear</button></h3></a>
-		@include('procesos.Servicios.search')
+		<h3>Listado de Clientes <!--<a href="Ventas/create"> <button class="btn btn-success">Crear</button>--></h3></a>
+		@include('procesos.Ventas.search')
 	</div>
 </div>
 
@@ -26,11 +26,12 @@
 					<td>{{ $cat->documento}}</td>
 					<td>{{ $cat->balance}}</td>
 					<td>
-						<a href="{{URL::action('Servicios@edit',$cat->codigo_cliente)}}"><button class="btn btn-info">Editar</button></a>
-						<a href="" data-target="#modal-delete-{{$cat->codigo_cliente}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
+						<a href="{{URL::action('VentasController@create',$cat->codigo_cliente)}}"><button class="btn btn-info">Seleccionar</button></a>
+						<!--<a href="{{URL::action('VentasController@edit',$cat->codigo_cliente)}}"><button class="btn btn-info">Editar</button></a>
+						<a href="" data-target="#modal-delete-{{$cat->codigo_cliente}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>-->
 					</td>
 				</tr>
-				@include('procesos.Servicios.modal')
+				@include('procesos.Ventas.modal')
 				@endforeach
 			</table>
 		</div>

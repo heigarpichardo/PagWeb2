@@ -8,6 +8,7 @@ use SisServicios\Http\Requests;
 use SisServicios\Ciudad;
 use Illuminate\Support\Facades\Redirect;
 use SisServicios\Http\Requests\CiudadFormRequest;
+
 use DB;
 
 class CiudadController extends Controller

@@ -118,6 +118,21 @@
               <?php } ?>
               </ul>
             </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-laptop"></i>
+                <span>Procesos</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <?php $url = $_SERVER['REQUEST_URI']; ?>
+                <?php if ($_SERVER['REQUEST_URI'] == '/home') { ?>
+                <li><a href="procesos/Ventas"><i class="fa fa-circle-o"></i>Ventas</a></li>
+              <?php } else { ?>
+                <li><a href="procesos/Ventas"><i class="fa fa-circle-o"></i>Ventas</a></li>
+              <?php } ?>
+              </ul>
+             </li>
             
             <!--<li class="treeview">
               <a href="#">

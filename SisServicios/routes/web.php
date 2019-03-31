@@ -27,7 +27,8 @@ Route::resource('direccion/ciudades','CiudadController');
 
 Route::resource('procesos/inscripcion','InscripcionController');
 Route::resource('procesos/cobros','CobrosController');
-Route::resource('procesos/Servicios','ProServiciosController');
+//Route::resource('procesos/Servicios','ProServiciosController');
+Route::resource('procesos/Ventas','VentasController');
 
 Route::resource('Mantenimientos/Servicios','ServiciosController');
 Route::resource('Mantenimientos/Condiciones','CondicionesController');
