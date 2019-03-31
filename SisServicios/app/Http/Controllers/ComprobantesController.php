@@ -19,7 +19,7 @@ class ComprobantesController extends Controller
         {
             $query=trim($request->get('searchText'));
             $index=DB::table('comprobantes')
-            ->where('tipo','=', $query)
+           // ->where('tipo','=', $query)
             //->where('estado','=','1')
             ->orderby('codigo','desc')
             ->paginate(5);
@@ -34,15 +34,26 @@ class ComprobantesController extends Controller
 
     public function store(ComprobantesFormRequest $request)
     {
-        $store=new Comprobantes;
-        $store->final=$request->get('final');
-        $store->secuencia=$request->get('secuencia');
-        $store->serial=$request->get('serial');
-        $store->tipo=$request->get('tipo');
-        $store->save();
+      $serial = $request->get('arreglo_serial'); 
+      $tipo= $request->get('arreglo_tipo');
+      $secuencia= $request->get('arreglo_secuencia');
+      $final= $request->get('arreglo_final');
+      //$cantidad = $request->get('cantidad');
+      $cont = 0;
 
+    while($cont < count($serial)){
+        $store=new Comprobantes;
+        $store->serial= $serial[$cont];
+        $store->final= $final[$cont];
+        $store->secuencia= $secuencia[$cont];
+        $store->tipo= $tipo[$cont];
+        $cont = $cont + 1;
+        
+      $store->save();
+    }
         return redirect::to('Mantenimientos\Comprobantes');
     }
+
 
     public function show($id)
     {

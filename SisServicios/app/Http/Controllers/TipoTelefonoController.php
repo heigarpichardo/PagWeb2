@@ -37,9 +37,9 @@ class TipoTelefonoController extends Controller
         $store=new TipoTelefono;
         $store->descripcion=$request->get('descripcion');
         $store->estado=(1);
-        $store->save();
-
-        return redirect::to('Mantenimientos\Tipotelefono');
+        //$store->save();
+echo $store->descripcion;
+       // return redirect::to('Mantenimientos\Tipotelefono');
     }
 
     public function show($id)
