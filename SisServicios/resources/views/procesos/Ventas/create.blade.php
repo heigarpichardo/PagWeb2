@@ -1,8 +1,32 @@
 @extends('layouts.admin')
 @section('contenido')
 <h3>Nuevo Servicio</h3>
-{!!Form::open(array('url'=>'suministro/requisicion','method'=>'POST','autocomplete'=>'off'))!!}
+{!!Form::open(array('url'=>'procesos/Ventas','method'=>'POST','autocomplete'=>'off'))!!}
 {{Form::token()}}
+<div class="row">
+	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+		<div class="form-group{{ $errors->has('cliente') ? ' has-error' : '' }}">
+			<label for="cliente">Cliente</label>
+			<input type="text" name="cliente" id="cliente" class="form-control" value="{{ old('cliente') }}"></input>
+			@if ($errors->has('cliente'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('cliente') }}</strong>
+                </span>
+            @endif
+		</div>
+	</div>
+	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+		<div class="form-group{{ $errors->has('NCF') ? ' has-error' : '' }}">
+			<label for="NCF">NCF</label>
+			<input type="text" name="NCF" class="form-control" placeholder="NCF..." value="{{ old('NCF') }}"></input>
+			@if ($errors->has('NCF'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('NCF') }}</strong>
+                </span>
+            @endif
+		</div>
+	</div>
+</div>	
 <div class="row">
 	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 		<div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}">
@@ -16,27 +40,20 @@
 		</div>
 	</div>
 	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-		<div class="form-group{{ $errors->has('nota') ? ' has-error' : '' }}">
-			<label for="nota">Nota</label>
-			<input type="text" name="nota" class="form-control" placeholder="Nota..." value="{{ old('nota') }}"></input>
-			@if ($errors->has('nota'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('nota') }}</strong>
-                </span>
-            @endif
+		<br><br>
+		<div class="form-group{{ $errors->has('tipoventa') ? ' has-error' : '' }}">
+			<input type="radio" name="tipoventa" value="1" checked>Contado
+			<input type="radio" name="tipoventa" value="2">Credito
 		</div>
 	</div>
 </div>	
 
 <div class="row">
-	<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+	<div class="col-lg-11 col-sm-11 col-md-11 col-xs-12">
 		<div class="form-group">
 			<label>Articulo</label>
-			<select name="pidarticulo" class="form-control select2" id="pidarticulo" data-live-search="true" data-style="btn-default">
-				@foreach($articulo as $art)
-					<option value="{{$art->idarticulo}}">{{$art->idarticulo.'-'.$art->nombre}}</option>
-				@endforeach
-			</select>
+			<input type="text" name="pidarticulo" id="pidarticulo" class="form-control" data-live-search="true" data-style="btn-default">
+			</input>
 		</div>
 	</div>
 	<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
@@ -47,8 +64,8 @@
 	</div>
 	<div class="col-lg-2 col-sm-2 col-md-2 col-xs-10">
 		<div class="form-group">
-			<label for="observacion">Observacion</label>
-			<input type="text" name="pobservacion" id="pobservacion" class="form-control" placeholder="Observacion" maxlength="95">
+			<label for="monto">Monto</label>
+			<input type="number" name="pmonto" id="pmonto" class="form-control" placeholder="monto" maxlength="20">
 		</div>
 	</div>
 	<br>
@@ -63,20 +80,20 @@
 		<table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
 			<thead>
 				<tr class="bg-success">
-					<th>Opciones</th>
-					<th>Articulo</th>
+					<th>ID</th>
+					<th>Descripcion</th>
 					<th>Cantidad</th>
-					<th>Observacion</th>
+					<th>Monto</th>
 				</tr>
 			</thead>
 			<tbody>
 				
 			</tbody>
 			<tfoot>
-				<th>Opciones</th>
-				<th>Articulo</th>
-				<th>Cantidad</th>
-				<th>Observacion</th>
+				<th>Total</th>
+				<th></th>
+				<th></th>
+				<th></th>
 			</tfoot>
 		</table>
 	</div>	

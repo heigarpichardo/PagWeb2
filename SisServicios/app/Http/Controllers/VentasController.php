@@ -36,7 +36,7 @@ class VentasController extends Controller
         }
     }
 
-    public function create($id)
+    public function create()
     {
         return view("procesos.Ventas.create");
     }

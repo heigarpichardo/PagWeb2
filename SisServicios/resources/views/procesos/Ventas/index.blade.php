@@ -2,7 +2,7 @@
 @section ('contenido')
 <div class="row">
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-		<h3>Listado de Clientes <!--<a href="Ventas/create"> <button class="btn btn-success">Crear</button>--></h3></a>
+		<h3>Listado de Clientes <a href="Ventas/create"> <button class="btn btn-success">Crear</button></h3></a>
 		@include('procesos.Ventas.search')
 	</div>
 </div>
