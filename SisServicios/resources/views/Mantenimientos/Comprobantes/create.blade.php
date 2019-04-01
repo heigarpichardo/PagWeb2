@@ -42,17 +42,17 @@
 				<input type="text" name="final" class="form-control" placeholder="#Final..." style="width: 100px">
 			</td>
 			<td>
-				<button class="btn btn-success" type="button" onclick="agregar();">Añadir</button>
+				<button class="btn btn-success" type="button" name="anadir" id="anadir" onclick="addRows();">Añadir</button>
 			</td>
-			<td>
+			<!--<td>
 				<button class="btn btn-danger" type="reset">Eliminar</button>
-			</td>
+			</td> -->
 	</tr>
 </table>
 			
 
 	<div style="margin-top: 20px">
-		<table id="detalles" class="table table-striped table-bordered table-condensed table-hover"">
+		<table name="detalles" id="detalles" class="table table-striped table-bordered table-condensed table-hover">
 			<thead>
 				<tr class="bg-success">
 					<th width="158px">Serial</th>
@@ -61,63 +61,68 @@
 					<th width="158px">Secuencia Final</th>
 				</tr>
 			</thead>
-		
 		</table>
+
 	</div>	
 
 			<div class="form-group" style="margin-top: 25px">
 				<button class="btn btn-primary" type="submit">Guardar</button>
 				<button class="btn btn-danger" type="reset">Cancelar</button>
 			</div>
-			{!!Form::close()!!}
+			
 		</div>
 	</div>
+{!!Form::close()!!}
 
-<?php
-function agregar()
-	{
-		$serial = $_POST['serial'];
-		$tipo = $_POST['tipo'];
-		$secuencia = $_POST["secuencia"];
-		$sfinal = $_POST["final"];
-		
-		//var pos = idart.indexOf(parseInt(idarticulo));
-		AgregarFila($serial,$tipo,$secuencia,$sfinal);
-		//evaluar();
-		limpiar();
-		
-	}
+<script>
 
-	function AgregarFila($idarticulo,$articulo,$cantidad,$observacion)
-	{
-		
-		 $fila = '<tr class="selected" id="fila'+$idarticulo+'"><td><button type="botton" class="btn btn-danger btn-sm" onclick="eliminar('+$idarticulo+');"><i class="fa fa-minus" aria-hidden="true"></i></button></td><td><input type="hidden" name="idart[]" value="'+$idarticulo+'">'+$articulo+'</td><td ><input type="hidden"  name="cant[]" value="'+$cantidad+'" readonly><span class="pcant'+$idarticulo+'">'+$cantidad+'</span><td><input type="hidden"  name="obser[]" value="'+$observacion+'" readonly><span>'+$observacion+'</span></td></tr>';
-			//$cont++;
-			limpiar();
-			//evaluar();
-	}
+	var arreglo_serial = [];
+	var arreglo_secuencia = [];
+	var arreglo_final = [];
+	var arreglo_tipo = [];
+	var cantidad = 0
 
-/*function limpiar()
-	{
-		$("#serial").val("");
-		$("#tipo").val("");
-		$("#secuencia").val("");
-		$("#final").val("");
-	}
 
-function eliminar(index)
-	{
-		var pos = idart.indexOf(index);
 
-		idart.splice(pos,1);
-		cant.splice(pos,1);
-		obser.splice(pos,1);
+function addRows() {
+    var table = document.getElementById( 'detalles' );
+      row = table.insertRow(1);
+      cell0 = row.insertCell(0);
+      cell1 = row.insertCell(1);
+      cell2 = row.insertCell(2);
+      cell3 = row.insertCell(3);
+      cell4= row.insertCell(4);
+    
 
-		cont--;
-		$("#fila" + index).remove();
-		//evaluar();
-	}
-*/
-?>
+      var serial=document.getElementsByName("serial")[0].value;
+      var tipo=document.getElementsByName("tipo")[0].value;
+      var secuencia=document.getElementsByName("secuencia")[0].value;
+      var final=document.getElementsByName("final")[0].value;
+
+	  arreglo_serial.push(serial);
+	  arreglo_tipo.push(parseInt(tipo));
+	  arreglo_final.push(parseInt(final));
+	  arreglo_secuencia.push(parseInt(secuencia));
+	  cantidad = cantidad + 1;
+
+ // cell0.innerHTML = '<input type="hidden"  name="arreglo_serial[]" value="'+serial+'" readonly>';
+ // cell1.innerHTML = '<input type="hidden"  name="arreglo_tipo[]" value="'+tipo+'" readonly>';
+  //cell2.innerHTML = '<input type="hidden"  name="arreglo_secuencia[]" value="'+secuencia+'" readonly>';
+ // cell3.innerHTML = '<input type="hidden"  name="arreglo_final[]" value="'+final+'" readonly>';
+ // cell4.innerHTML = '<button class="btn btn-danger" type="reset" onclick="SomeDeleteRowFunction(this)">Eliminar</button>';
+
+  //cell4.appendChild(button);
+var fila = '<tr class="selected"><td><input type="hidden" name="arreglo_serial[]" value="'+serial+'">'+serial+'</td><td ><input type="hidden"  name="arreglo_tipo[]" value="'+tipo+'" readonly>'+tipo+'</td><td><input type="hidden"  name="arreglo_secuencia[]" value="'+secuencia+'" readonly><span>'+secuencia+'</span></td><td><input  type="hidden"  name="arreglo_final[]" value="'+final+'" readonly >'+final+'</td><td><button type="botton" class="btn btn-danger btn-sm" onclick="SomeDeleteRowFunction(this)">Eliminar</button></td></tr>';
+$('#detalles').append(fila);
+}
+
+   function SomeDeleteRowFunction(o) {
+     //no clue what to put here?
+     var p=o.parentNode.parentNode;
+         p.parentNode.removeChild(p);
+    }
+
+
+</script>
 
 @endsection

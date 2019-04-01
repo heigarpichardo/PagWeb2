@@ -24,10 +24,10 @@ class ComprobantesFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'final' => 'required',
+         /*   'final' => 'required',
             'secuencia' => 'required',
             'serial' => 'required|max:1',
-            'tipo' => 'required'
+            'tipo' => 'required'*/
         ];
     }
 }
