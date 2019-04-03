@@ -26,7 +26,7 @@
 					<td>{{ $cat->documento}}</td>
 					<td>{{ $cat->balance}}</td>
 					<td>
-						<a href="{{URL::action('VentasController@create',$cat->codigo_cliente)}}"><button class="btn btn-info">Seleccionar</button></a>
+						<a href="{{URL::action('VentasController@createp',['id'=>$cat->codigo_cliente])}}"><button class="btn btn-info">Seleccionar</button></a>
 						<!--<a href="{{URL::action('VentasController@edit',$cat->codigo_cliente)}}"><button class="btn btn-info">Editar</button></a>
 						<a href="" data-target="#modal-delete-{{$cat->codigo_cliente}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>-->
 					</td>

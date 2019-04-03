@@ -7,7 +7,7 @@
 	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 		<div class="form-group{{ $errors->has('cliente') ? ' has-error' : '' }}">
 			<label for="cliente">Cliente</label>
-			<input type="text" name="cliente" id="cliente" class="form-control" value="{{ old('cliente') }}"></input>
+			<input type="text" name="cliente" id="cliente" readonly="" class="form-control" value="{{strtoupper($cliente->nombre)}} {{strtoupper($cliente->apellido)}}"></input>
 			@if ($errors->has('cliente'))
                 <span class="help-block">
                     <strong>{{ $errors->first('cliente') }}</strong>
@@ -18,7 +18,7 @@
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 		<div class="form-group{{ $errors->has('NCF') ? ' has-error' : '' }}">
 			<label for="NCF">NCF</label>
-			<input type="text" name="NCF" class="form-control" placeholder="NCF..." value="{{ old('NCF') }}"></input>
+			<input type="text" name="NCF" class="form-control" readonly="" placeholder="NCF..." value="{{$NCF}}"></input>
 			@if ($errors->has('NCF'))
                 <span class="help-block">
                     <strong>{{ $errors->first('NCF') }}</strong>
@@ -28,7 +28,7 @@
 	</div>
 </div>	
 <div class="row">
-	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+	<!--<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 		<div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}">
 			<label for="fecha">Fecha</label>
 			<input type="date" name="fecha" id="fecha" class="form-control" value="{{ old('fecha') }}"></input>
@@ -38,12 +38,13 @@
                 </span>
             @endif
 		</div>
-	</div>
+	</div>-->
 	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-		<br><br>
+		<label for="tipo_venta">Condicion</label>
+		<br>
 		<div class="form-group{{ $errors->has('tipoventa') ? ' has-error' : '' }}">
-			<input type="radio" name="tipoventa" value="1" checked>Contado
-			<input type="radio" name="tipoventa" value="2">Credito
+			<input type="radio" name="tipoventa" value="1" checked> Contado
+			<input type="radio" name="tipoventa" value="2"> Credito
 		</div>
 	</div>
 </div>	
@@ -52,10 +53,20 @@
 	<div class="col-lg-11 col-sm-11 col-md-11 col-xs-12">
 		<div class="form-group">
 			<label>Articulo</label>
+			<select name="pidarticulo" class="form-control select2" id="pidarticulo" data-live-search="true" data-style="btn-default">
+				@foreach($articulo as $art)
+					<option value="{{$art->codigo_servicio}}">{{$art->codigo_servicio.'-'.$art->descripcion}}</option>
+				@endforeach
+			</select>
+		</div>
+	</div>
+	<!--<div class="col-lg-11 col-sm-11 col-md-11 col-xs-12">
+		<div class="form-group">
+			<label>Articulo</label>
 			<input type="text" name="pidarticulo" id="pidarticulo" class="form-control" data-live-search="true" data-style="btn-default">
 			</input>
 		</div>
-	</div>
+	</div>-->
 	<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 		<div class="form-group">
 			<label for="cantidad">Cantidad</label>
@@ -108,12 +119,12 @@
 
 @push('scripts')
 <script>
+
 	$(document).ready(function(){
 		$('#bt_add').click(function(){
 			agregar();
 		});
-
-		document.getElementById('fecha').value = new Date().toDateInputValue();
+		//document.getElementById('fecha').value = new Date().toDateInputValue();
 	});
 
 	var cont= 0;
@@ -125,13 +136,6 @@
 	var idart = [];
 	var cant = [];
 	var obser = [];
-
-	//para la fecha del dia
-	Date.prototype.toDateInputValue = (function() {
-	    var local = new Date(this);
-	    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-	    return local.toJSON().slice(0,10);
-	});
 
 	function ValidarSiExisteArticulo(idarticulo)
 	{
@@ -150,7 +154,7 @@
 		idarticulo = $("#pidarticulo").val();
 		articulo = $("#pidarticulo option:selected").text();
 		cantidad = $("#pcantidad").val();
-		observacion = $("#pobservacion").val();
+		//observacion = $("#pobservacion").val();
 		
 		var pos = idart.indexOf(parseInt(idarticulo));
 
@@ -165,9 +169,9 @@
 
 				idart.push(parseInt(idarticulo));
 				cant.push(parseFloat(cantidad));
-				obser.push(parseFloat(observacion));
+				//obser.push(parseFloat(observacion));
 
-				AgregarFila(idarticulo,articulo,cantidad,observacion);
+				AgregarFila(idarticulo,articulo,cantidad);
 				evaluar();
 
 				limpiar();
@@ -177,16 +181,16 @@
 		{
 			idart.push(parseInt(idarticulo));
 			cant.push(parseInt(cantidad));
-			obser.push(parseFloat(observacion));
+			//obser.push(parseFloat(observacion));
 			
-			AgregarFila(idarticulo,articulo,cantidad,observacion);
+			AgregarFila(idarticulo,articulo,cantidad);
 		}
 	}
 
-	function AgregarFila(idarticulo,articulo,cantidad,observacion)
+	function AgregarFila(idarticulo,articulo,cantidad)
 	{
 		
-		var fila = '<tr class="selected" id="fila'+idarticulo+'"><td><button type="botton" class="btn btn-danger btn-sm" onclick="eliminar('+idarticulo+');"><i class="fa fa-minus" aria-hidden="true"></i></button></td><td><input type="hidden" name="idart[]" value="'+idarticulo+'">'+articulo+'</td><td ><input type="hidden"  name="cant[]" value="'+cantidad+'" readonly><span class="pcant'+idarticulo+'">'+cantidad+'</span><td><input type="hidden"  name="obser[]" value="'+observacion+'" readonly><span>'+observacion+'</span></td></tr>';
+		var fila = '<tr class="selected" id="fila'+idarticulo+'"><td><button type="botton" class="btn btn-danger btn-sm" onclick="eliminar('+idarticulo+');"><i class="fa fa-minus" aria-hidden="true"></i></button></td><td><input type="hidden" name="idart[]" value="'+idarticulo+'">'+articulo+'</td><td ><input type="hidden"  name="cant[]" value="'+cantidad+'" readonly><span class="pcant'+idarticulo+'">'+cantidad+'</span><td><input type="hidden"  name="obser[]" value="'+cantidad+'" readonly><span>'+cantidad+'</span></td></tr>';
 			cont++;
 			limpiar();
 			evaluar();
@@ -216,7 +220,7 @@
 	function limpiar()
 	{
 		$("#pcantidad").val("");
-		$("#pobservacion").val("");
+		//$("#pobservacion").val("");
 	}
 	//evita enviar un ingreso sin detalles
 	function evaluar()
@@ -236,13 +240,12 @@
 
 		idart.splice(pos,1);
 		cant.splice(pos,1);
-		obser.splice(pos,1);
+		//obser.splice(pos,1);
 
 		cont--;
 		$("#fila" + index).remove();
 		evaluar();
 	}
-
 </script>	
 @endpush
 @endsection

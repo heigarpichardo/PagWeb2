@@ -5,7 +5,11 @@ namespace SisServicios\Http\Controllers;
 use Illuminate\Http\Request;
 
 use SisServicios\Http\Requests;
-use SisServicios\Ciudad;
+
+use SisServicios\Ventas;
+use SisServicios\Detventas;
+use SisServicios\Comprobantes;
+use SisServicios\Servicios;
 use Illuminate\Support\Facades\Redirect;
 use SisServicios\Http\Requests\VentasFormRequest;
 
@@ -36,9 +40,25 @@ class VentasController extends Controller
         }
     }
 
-    public function create()
+    public function createp($id)
     {
-        return view("procesos.Ventas.create");
+    	$cliente=DB::table('persona as per')
+    		->join('tipo_persona as tip','tip.codigo_tipo_persona','=','per.codigo_tipo_persona')
+    		->join('cliente as cli','cli.codigo_persona','=','per.codigo_persona')
+    		->select('cli.codigo_cliente','per.nombre as nombre','cli.apellido','per.documento','cli.balance','per.tipo_ncf')
+    		->where('cli.codigo_cliente','=',$id)
+    		->first();
+
+    	$comprobante=Comprobantes::findOrFail($cliente->tipo_ncf)->first();
+
+    	//'final','secuencia','serial','tipo'
+
+    	$NCF=$comprobante->serial.str_pad($comprobante->tipo, 2,'0',STR_PAD_LEFT).str_pad($comprobante->secuencia+1, 8,'0',STR_PAD_LEFT);
+    	//$NCF=str_pad($comprobante->secuencia+1, 8,'0',STR_PAD_LEFT);
+    	//var_dump($comprobante);
+    	$servicios=Servicios::all();
+    	//var_dump($servicios);
+        return view("procesos.Ventas.create",["cliente" => $cliente,"NCF" =>$NCF,"articulo" => $servicios]);
     }
 
     public function store(VentasFormRequest $request)

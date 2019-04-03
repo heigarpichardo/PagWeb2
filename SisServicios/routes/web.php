@@ -22,6 +22,7 @@ Route::get('/admin', function () {
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+route::get('/procesos/Ventas/{id}','VentasController@createp')->name('createp');
 
 Route::resource('direccion/ciudades','CiudadController');
 
