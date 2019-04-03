@@ -15,3 +15,9 @@ storage/*.key
 Homestead.yaml
 Homestead.json
 /.vagrant
+SisServicios/app/Http/Controllers/VentasController.php
+SisServicios/app/Http/Controllers/VentasController.php
+SisServicios/app/Http/Controllers/VentasController.php
+SisServicios/resources/views/procesos/Ventas/edit.blade.php
+SisServicios/resources/views/procesos/Ventas/index.blade.php
+SisServicios/resources/views/procesos/Ventas/index.blade.php
