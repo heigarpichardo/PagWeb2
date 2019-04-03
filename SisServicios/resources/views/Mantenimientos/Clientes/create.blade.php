@@ -16,17 +16,42 @@
 			{!!Form::open(array('url'=>'Mantenimientos/Clientes','method'=>'POST','autocomplete'=>'off', 'files'=>'true'))!!}
 			{!!Form::token()!!}
 			<div class="form-group">
-				<label for="nombre">Apellido</label>
-				<input type="text" name="apellido" class="form-control" placeholder="apellido">
+				<label for="nombre">Nombre</label>
+				<input type="text" name="nombre" class="form-control" placeholder="nombre...">
 			</div>
-				<div class="form-group">
-				<label>Tasas</label>
-				<select name="codigo_tasa" class="form-control" style="width: 100px">
-					<?php foreach ($tasa_itbis as $cat) {  ?>
-						<option value= "{{$cat->codigo_tasa}}"> {{$cat->descripcion}} </option>
+			<div class="form-group">
+				<label for="nombre">Apellido</label>
+				<input type="text" name="apellido" class="form-control" placeholder="apellido...">
+			</div>
+			<div class="form-group">
+				<label for="nombre">Documento</label>
+				<input type="text" name="documento" class="form-control" placeholder="documento...">
+			</div>
+			<div class="form-group">
+				<label for="nombre">Tipo de Telefono</label>
+				<select name="tipo_telefono" class="form-control" style="width: 100px">
+					<?php foreach ($tipo_telefono as $cat) {  ?>
+						<option value= "{{$cat->codigo_tipo_telefono}}"> {{$cat->descripcion}} </option>
 					<?php } ?>
 				</select>
-			</div> 
+			</div>
+			<div class="form-group">
+				<label for="nombre">Telefono</label>
+				<input type="text" name="telefono" class="form-control" placeholder="telefono...">
+			</div>
+			<div class="form-group">
+				<label for="nombre">Tipo NCF</label>
+				<input type="text" name="tipo_NCF" class="form-control" placeholder="tipo...">
+			</div>
+		<!--	<div class="form-group">
+				<label for="nombre">Balance</label>
+				<input type="text" name="balance" class="form-control" placeholder="balance...">
+			</div> -->
+				<div class="form-group">
+				<label for="nombre">Limite de Credito</label>
+				<input type="text" name="Limite_credito" class="form-control" placeholder="limite de credito...">
+			</div>
+			
 			<div class="form-group">
 				<button class="btn btn-primary" type="submit">Guardar</button>
 				<button class="btn btn-danger" type="reset">Cancelar</button>
