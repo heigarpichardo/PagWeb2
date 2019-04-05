@@ -117,7 +117,7 @@
 </div>		
 {!!Form::close()!!}
 
-@push('scripts')
+<!--@push('scripts')-->
 <script>
 
 	$(document).ready(function(){
@@ -247,5 +247,5 @@
 		evaluar();
 	}
 </script>	
-@endpush
+<!--@endpush-->
 @endsection
