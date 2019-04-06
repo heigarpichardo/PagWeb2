@@ -83,7 +83,7 @@
 	<div class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
 		<div class="form-group">
 			<br>
-			<button type="button" id="bt_add" class="btn btn-success" title="Agregar" ><i class="fa fa-plus" aria-hidden="true"></i></button>
+			<button type="button" id="bt_add" class="btn btn-success" onclick="agregar()" title="Agregar" ><i class="fa fa-plus" aria-hidden="true"></i></button>
 		</div>
 	</div>
 
@@ -117,25 +117,26 @@
 </div>		
 {!!Form::close()!!}
 
-<!--@push('scripts')-->
 <script>
 
 	$(document).ready(function(){
-		$('#bt_add').click(function(){
+		$("#bt_add").onclick(function(){
 			agregar();
 		});
-		//document.getElementById('fecha').value = new Date().toDateInputValue();
 	});
 
+
+	//alert("hola");
+
 	var cont= 0;
-	total = 0;
-	subtotal = [];
-
-	$("#guardar").hide();
-
+	var total = 0;
+	var subtotal = [];
+	
 	var idart = [];
 	var cant = [];
 	var obser = [];
+
+	$("#guardar").hide();
 
 	function ValidarSiExisteArticulo(idarticulo)
 	{
@@ -151,14 +152,17 @@
 
 	function agregar()
 	{
+		alert(idart.length);
 		idarticulo = $("#pidarticulo").val();
 		articulo = $("#pidarticulo option:selected").text();
 		cantidad = $("#pcantidad").val();
-		//observacion = $("#pobservacion").val();
 		
-		var pos = idart.indexOf(parseInt(idarticulo));
+		if (idart.length > 0)
+			var pos = idart.indexOf(parseInt(idarticulo));
+		else
+			var pos = 0
 
-		if(idart.indexOf(parseInt(idarticulo)) != -1 && Validar(cantidad))
+		if(pos != -1 && Validar(cantidad))
 		{
 			cant[pos] = parseInt(cant[pos]) + parseInt(cantidad);
 			cantidad = cant[pos];
@@ -189,11 +193,14 @@
 
 	function AgregarFila(idarticulo,articulo,cantidad)
 	{
-		
+		idarticulo = $("#pidarticulo").val();
+		articulo = $("#pidarticulo option:selected").text();
+		cantidad = $("#pcantidad").val();
+
 		var fila = '<tr class="selected" id="fila'+idarticulo+'"><td><button type="botton" class="btn btn-danger btn-sm" onclick="eliminar('+idarticulo+');"><i class="fa fa-minus" aria-hidden="true"></i></button></td><td><input type="hidden" name="idart[]" value="'+idarticulo+'">'+articulo+'</td><td ><input type="hidden"  name="cant[]" value="'+cantidad+'" readonly><span class="pcant'+idarticulo+'">'+cantidad+'</span><td><input type="hidden"  name="obser[]" value="'+cantidad+'" readonly><span>'+cantidad+'</span></td></tr>';
-			cont++;
-			limpiar();
-			evaluar();
+			//cont++;
+			//limpiar();
+			//evaluar();
 			$('#detalles').append(fila);
 	}
 
@@ -247,5 +254,4 @@
 		evaluar();
 	}
 </script>	
-<!--@endpush-->
 @endsection
