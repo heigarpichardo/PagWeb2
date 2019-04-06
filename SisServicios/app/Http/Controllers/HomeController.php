@@ -3,6 +3,7 @@
 namespace SisServicios\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class HomeController extends Controller
 {
@@ -25,5 +26,19 @@ class HomeController extends Controller
     {
         //return view('home');
         return view('/layouts/admin');
+    }
+
+    public function generatePDF()
+
+    {
+
+        $data = ['title' => 'Welcome to HDTuto.com'];
+
+        $pdf = PDF::loadView('myPDF', $data);
+
+  
+
+        return $pdf->download('itsolutionstuff.pdf');
+
     }
 }
