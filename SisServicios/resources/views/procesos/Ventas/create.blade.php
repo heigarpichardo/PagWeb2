@@ -3,6 +3,8 @@
 <h3>Nuevo Servicio</h3>
 {!!Form::open(array('url'=>'procesos/Ventas','method'=>'POST','autocomplete'=>'off'))!!}
 {{Form::token()}}
+<input type="hidden" name="id_cliente" value="{{$cliente->codigo_cliente}}">
+<input type="hidden" name="tipo_ncf" value="{{$cliente->tipo_ncf}}">
 <div class="row">
 	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 		<div class="form-group{{ $errors->has('cliente') ? ' has-error' : '' }}">
@@ -43,12 +45,12 @@
 		<label for="tipo_venta">Condicion</label>
 		<br>
 		<div class="form-group{{ $errors->has('tipoventa') ? ' has-error' : '' }}">
-			<input type="radio" name="tipoventa" value="1" checked> Contado
-			<input type="radio" name="tipoventa" value="2"> Credito
+			<input type="radio" name="tipoventa" value="1" onclick="Condicion()" value="true" checked /> Contado
+			<input type="radio" name="tipoventa" value="2" onclick="Condicion()" value="false" /> Credito
+			<input type="number" name="condicion" id="condicion" disabled="true" />
 		</div>
 	</div>
 </div>	
-
 <div class="row">
 	<div class="col-lg-11 col-sm-11 col-md-11 col-xs-12">
 		<div class="form-group">
@@ -83,7 +85,7 @@
 	<div class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
 		<div class="form-group">
 			<br>
-			<button type="button" id="bt_add" class="btn btn-success" onclick="agregar()" title="Agregar" ><i class="fa fa-plus" aria-hidden="true"></i></button>
+			<button type="button" id="bt_add" class="btn btn-success" onclick="AgregarFila()" title="Agregar" ><i class="fa fa-plus" aria-hidden="true"></i></button>
 		</div>
 	</div>
 
@@ -125,8 +127,7 @@
 		});
 	});
 
-
-	//alert("hola");
+	var pos = 0;
 
 	var cont= 0;
 	var total = 0;
@@ -134,7 +135,7 @@
 	
 	var idart = [];
 	var cant = [];
-	var obser = [];
+	var monto = [];
 
 	$("#guardar").hide();
 
@@ -152,15 +153,14 @@
 
 	function agregar()
 	{
-		alert(idart.length);
+		//alert(idart.length);
 		idarticulo = $("#pidarticulo").val();
 		articulo = $("#pidarticulo option:selected").text();
 		cantidad = $("#pcantidad").val();
 		
-		if (idart.length > 0)
+		/*if (idart.length > 0)
 			var pos = idart.indexOf(parseInt(idarticulo));
-		else
-			var pos = 0
+		else*/
 
 		if(pos != -1 && Validar(cantidad))
 		{
@@ -191,13 +191,14 @@
 		}
 	}
 
-	function AgregarFila(idarticulo,articulo,cantidad)
+	function AgregarFila()
 	{
 		idarticulo = $("#pidarticulo").val();
 		articulo = $("#pidarticulo option:selected").text();
 		cantidad = $("#pcantidad").val();
+		monto 	= $("#pmonto").val();
 
-		var fila = '<tr class="selected" id="fila'+idarticulo+'"><td><button type="botton" class="btn btn-danger btn-sm" onclick="eliminar('+idarticulo+');"><i class="fa fa-minus" aria-hidden="true"></i></button></td><td><input type="hidden" name="idart[]" value="'+idarticulo+'">'+articulo+'</td><td ><input type="hidden"  name="cant[]" value="'+cantidad+'" readonly><span class="pcant'+idarticulo+'">'+cantidad+'</span><td><input type="hidden"  name="obser[]" value="'+cantidad+'" readonly><span>'+cantidad+'</span></td></tr>';
+		var fila = '<tr class="selected" id="fila'+idarticulo+'"><td><button type="botton" class="btn btn-danger btn-sm" onclick="eliminar('+idarticulo+');"><i class="fa fa-minus" aria-hidden="true"></i></button></td><td><input type="hidden" name="idart[]" value="'+idarticulo+'">'+articulo+'</td><td ><input type="hidden"  name="cant[]" value="'+cantidad+'" readonly><span class="pcant'+idarticulo+'">'+cantidad+'</span><td><input type="hidden"  name="monto[]" value="'+monto+'" readonly><span>'+monto+'</span></td></tr>';
 			//cont++;
 			//limpiar();
 			//evaluar();
@@ -252,6 +253,22 @@
 		cont--;
 		$("#fila" + index).remove();
 		evaluar();
+	}
+
+
+	function Condicion(){
+
+		var	Contado =  $("input:radio[name=tipoventa]:checked").val();
+		if(Contado == 1){
+			//alert("Contado");
+			document.getElementById("condicion").disabled = true;
+			document.getElementById("condicion").value = 0; 
+
+		}	else {
+			//alert("Credito");
+			document.getElementById("condicion").disabled = false;
+		    document.getElementById("condicion").value = 0;
+		} 
 	}
 </script>	
 @endsection
