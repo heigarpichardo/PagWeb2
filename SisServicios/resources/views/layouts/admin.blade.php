@@ -101,10 +101,10 @@
                 <li><a href="{{asset('direccion/ciudades')}}"><i class="fa fa-circle-o"></i>Ciudad</a></li>
                 <li><a href="{{asset('Mantenimientos/Tipopersona')}}"><i class="fa fa-circle-o"></i>Tipo de Persona</a></li>
                 <li><a href="{{asset('Mantenimientos/Tasaitbis')}}"><i class="fa fa-circle-o"></i> Tasa Itbis</a></li>
-                <li><a href="{{asset('Mantenimientos/Tipotelefono')}}"><i class="fa fa-circle-o"></i> Tipo Telefono</a></li>
+                <li><a href="{{asset('Mantenimientos/Tipotelefono')}}"><i class="fa fa-circle-o"></i>Tipo Telefono</a></li>
                 <li><a href="{{asset('Mantenimientos/Servicios')}}"><i class="fa fa-circle-o"></i> Servicios</a></li>
                 <li><a href="{{asset('Mantenimientos/Clientes')}}"><i class="fa fa-circle-o"></i> Clientes</a></li>
-                <li><a href="{{asset('Mantenimientos/Comprobantes')}}"><i class="fa fa-circle-o"></i> Secuencias NCF</a></li>
+                <li><a href="{{asset('Mantenimientos/Comprobantes')}}"><i class="fa fa-circle-o"></i>Secuencias NCF</a></li>
               </ul>
             </li>
             <li class="treeview">
