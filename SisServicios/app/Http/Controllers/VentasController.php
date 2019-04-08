@@ -5,7 +5,7 @@ namespace SisServicios\Http\Controllers;
 use Illuminate\Http\Request;
 
 use SisServicios\Http\Requests;
-
+use Barryvdh\DomPDF\Facade as PDF;
 use SisServicios\Ventas;
 use SisServicios\Detventas;
 use SisServicios\Comprobantes;
@@ -29,9 +29,9 @@ class VentasController extends Controller
         if ($request)
         {
             $query=trim($request->get('searchText'));
-    		$index=DB::table('persona as per')
+    		$index=DB::table('personas as per')
     		->join('tipo_persona as tip','tip.codigo_tipo_persona','=','per.codigo_tipo_persona')
-    		->join('cliente as cli','cli.codigo_persona','=','per.codigo_persona')
+    		->join('clientes as cli','cli.codigo_persona','=','per.codigo_persona')
     		->select('cli.codigo_cliente','per.nombre','cli.apellido','per.documento','cli.balance')
     		->where(DB::raw('CONCAT_WS(" ", per.nombre, cli.apellido)'),'LIKE','%'.$query.'%')
             ->orderby('per.nombre','desc')
@@ -43,9 +43,9 @@ class VentasController extends Controller
 
     public function createp($id)
     {
-    	$cliente=DB::table('persona as per')
+    	$cliente=DB::table('personas as per')
     		->join('tipo_persona as tip','tip.codigo_tipo_persona','=','per.codigo_tipo_persona')
-    		->join('cliente as cli','cli.codigo_persona','=','per.codigo_persona')
+    		->join('clientes as cli','cli.codigo_persona','=','per.codigo_persona')
     		->select('cli.codigo_cliente','per.nombre as nombre','cli.apellido','per.documento','cli.balance','per.tipo_ncf')
     		->where('cli.codigo_cliente','=',$id)
     		->first();
@@ -65,9 +65,9 @@ class VentasController extends Controller
     public function store(VentasFormRequest $request)
     {
 
-        try
-        {
-            DB::beginTransaction();  
+    //    try
+      //  {
+        //    DB::beginTransaction();  
    
             $comprobante=Comprobantes::findOrFail($request->get('tipo_ncf'))->first();
 
@@ -76,53 +76,66 @@ class VentasController extends Controller
 
             $secuencia = $comprobante->secuencia;
             $comprobante->secuencia= $secuencia+1;
-            $comprobante->update();
+           // $comprobante->update();
 
             $date = new carbon();
 
-            $Ventas=new Ventas;
-            $Ventas->codigo_persona=$request->get('id_cliente');
-            $Ventas->NCF=$NCF;//$request->get('NCF');
-            $Ventas->tipo_venta=$request->get('tipoventa');
-            $Ventas->condicion=$request->get('condicion');
-            $Ventas->fecha=$date->todatestring();   $date->addday($request->get('condicion'));//$request->get('descripcion');
-            $Ventas->fecha_vencimiento=$date->todatestring();//$request->get('descripcion');
-            $Ventas->total_itbis=500;//$request->get('descripcion');
-            $Ventas->total_descuentos=500;//$request->get('descripcion');
-            $Ventas->total_importe=500;//$request->get('descripcion');
-            $Ventas->total_factura=500;//$request->get('descripcion');
-            $Ventas->hora=$date->toTimeString();//$request->get('descripcion');
-            $Ventas->codigo_usuario=Auth::user()->id;//$request->get('descripcion');
-            $Ventas->save();
+            $ventas=new Ventas;
+            $ventas->codigo_persona=$request->get('id_cliente');
+            $ventas->NCF=$NCF;//$request->get('NCF');
+            $ventas->tipo_venta=$request->get('tipoventa');
+            $ventas->condicion=$request->get('condicion');
+            $ventas->fecha=$date->todatestring();   $date->addday($request->get('condicion'));//$request->get('descripcion');
+            $ventas->fecha_vencimiento=$date->todatestring();//$request->get('descripcion');
+            $ventas->total_itbis=500;//$request->get('descripcion');
+            $ventas->total_descuentos=500;//$request->get('descripcion');
+            $ventas->total_importe=500;//$request->get('descripcion');
+            $ventas->total_factura=500;//$request->get('descripcion');
+            $ventas->hora=$date->toTimeString();//$request->get('descripcion');
+            $ventas->codigo_usuario=Auth::user()->id;//$request->get('descripcion');
+           // $Ventas->save();
+            
 
             $idarticulo = $request->get('idart');
             $cantidad = $request->get('cant');
             $monto = $request->get('monto');
 
             $cont = 0;
+            $arreglo = array();
 
             while($cont < count($idarticulo))
             {
-                $Detventas = new Detventas();
-                $Detventas->codigo_ventas = $Ventas->codigo_venta;
-                $Detventas->codigo_servicio = $idarticulo[$cont];
-                $Detventas->descripcion_servicio=("");
-                $Detventas->monto_itbis = (500);
-                $Detventas->monto_importe = (500);
-                $Detventas->monto_descuento = (500);
-                $Detventas->monto_total = (500);
-                $Detventas->save();
+                $detventas = new Detventas();
+                $detventas->codigo_ventas = $ventas->codigo_venta;
+                $detventas->codigo_servicio = $idarticulo[$cont];
+                $detventas->descripcion_servicio=("");
+                $detventas->monto_itbis = (500);
+                $detventas->monto_importe = (500);
+                $detventas->monto_descuento = (500);
+                $detventas->monto_total = (500);
+             //   $Detventas->save();
+                $arreglo[] = $detventas;
                 $cont = $cont + 1;
             }
-              DB::commit();
-        }
-        catch(\Exception $e)
-        {
-            DB::rollback();
-        }
+         
+      //  $data = ['title' => 'Factura'];
+     //   $data = ['venta' => $ventas];
+       // $data = ['detalles' => $detventas];
+        $pdf=PDF::loadView('myPDF',['venta' => $ventas, 'detalles' => $arreglo]);
+        return $pdf->download('Factura.pdf');
 
-        return redirect::to('procesos/Ventas');
-    }
+
+
+       //       DB::commit();
+       // }
+       // catch(\Exception $e)
+       // {
+          
+         //   DB::rollback();
+       // }
+
+ //   return redirect::to('procesos/Ventas');
+  }
 
     public function show($id)
     {

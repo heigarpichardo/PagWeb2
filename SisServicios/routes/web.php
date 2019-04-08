@@ -41,3 +41,4 @@ Route::resource('Mantenimientos/Clientes','ClientesController');
 Route::resource('Mantenimientos/Comprobantes','ComprobantesController');
 
 Route::get('generate-pdf','HomeController@generatePDF');
+Route::get('generate-pdf','VentasController@create');
