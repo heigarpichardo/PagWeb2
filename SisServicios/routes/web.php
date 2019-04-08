@@ -39,3 +39,5 @@ Route::resource('Mantenimientos/Tipotelefono','TipoTelefonoController');
 Route::resource('Mantenimientos/Telefonos','TelefonosController');
 Route::resource('Mantenimientos/Clientes','ClientesController');
 Route::resource('Mantenimientos/Comprobantes','ComprobantesController');
+
+Route::get('generate-pdf','HomeController@generatePDF');
