@@ -107,6 +107,7 @@
                 <li><a href="{{asset('Mantenimientos/Comprobantes')}}"><i class="fa fa-circle-o"></i>Secuencias NCF</a></li>
               </ul>
             </li>
+
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-laptop"></i>
@@ -116,7 +117,22 @@
               <ul class="treeview-menu">
                 <li><a href="{{asset('procesos/Ventas')}}"><i class="fa fa-circle-o"></i>Ventas</a></li>
               </ul>
-             </li>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-laptop"></i>
+                <span>Usuario</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li class="nav-item">
+                    <!--@if (Route::has('register'))-->
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    <!--@endif-->
+                </li>
+              </ul>
+            </li>
             
             <!--<li class="treeview">
               <a href="#">

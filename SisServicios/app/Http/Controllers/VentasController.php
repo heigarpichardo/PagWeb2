@@ -10,6 +10,8 @@ use SisServicios\Ventas;
 use SisServicios\Detventas;
 use SisServicios\Comprobantes;
 use SisServicios\Servicios;
+use SisServicios\TasaItbis;
+use SisServicios\clientes;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use SisServicios\Http\Requests\VentasFormRequest;
@@ -65,9 +67,9 @@ class VentasController extends Controller
     public function store(VentasFormRequest $request)
     {
 
-    //    try
-      //  {
-        //    DB::beginTransaction();  
+       try
+       {
+            DB::beginTransaction();  
    
             $comprobante=Comprobantes::findOrFail($request->get('tipo_ncf'))->first();
 
@@ -76,7 +78,7 @@ class VentasController extends Controller
 
             $secuencia = $comprobante->secuencia;
             $comprobante->secuencia= $secuencia+1;
-           // $comprobante->update();
+            $comprobante->update();
 
             $date = new carbon();
 
@@ -87,14 +89,13 @@ class VentasController extends Controller
             $ventas->condicion=$request->get('condicion');
             $ventas->fecha=$date->todatestring();   $date->addday($request->get('condicion'));//$request->get('descripcion');
             $ventas->fecha_vencimiento=$date->todatestring();//$request->get('descripcion');
-            $ventas->total_itbis=500;//$request->get('descripcion');
-            $ventas->total_descuentos=500;//$request->get('descripcion');
-            $ventas->total_importe=500;//$request->get('descripcion');
-            $ventas->total_factura=500;//$request->get('descripcion');
             $ventas->hora=$date->toTimeString();//$request->get('descripcion');
             $ventas->codigo_usuario=Auth::user()->id;//$request->get('descripcion');
-           // $Ventas->save();
-            
+            $ventas->total_itbis=0;//$request->get('descripcion');
+            $ventas->total_descuentos=0;//$request->get('descripcion');
+            $ventas->total_importe=0;//$request->get('descripcion');
+            $ventas->total_factura=0;//$request->get('descripcion');
+            $ventas->save();
 
             $idarticulo = $request->get('idart');
             $cantidad = $request->get('cant');
@@ -103,38 +104,67 @@ class VentasController extends Controller
             $cont = 0;
             $arreglo = array();
 
+            $timporte = 0;
+            $titbis = 0;
+            $ttotal = 0;
+
             while($cont < count($idarticulo))
             {
+
+                $servicios=Servicios::findOrFail($idarticulo[$cont])->first();
+                $tasa =TasaItbis::findOrFail($servicios->codigo_tasa)->first();
+
+                $importe = $monto[$cont] / ($tasa->tasa + 1);
+                $itbis   = ($monto[$cont] / ($tasa->tasa + 1)) * $tasa->tasa;
+                $total   = $monto[$cont];
+
+                $timporte = $timporte + $importe;
+                $titbis   = $titbis + $itbis;
+                $ttotal   = $ttotal + $total;
+
                 $detventas = new Detventas();
                 $detventas->codigo_ventas = $ventas->codigo_venta;
                 $detventas->codigo_servicio = $idarticulo[$cont];
-                $detventas->descripcion_servicio=("");
-                $detventas->monto_itbis = (500);
-                $detventas->monto_importe = (500);
-                $detventas->monto_descuento = (500);
-                $detventas->monto_total = (500);
-             //   $Detventas->save();
+                $detventas->descripcion_servicio=$servicios->descripcion;
+                $detventas->monto_itbis = $itbis;
+                $detventas->monto_importe = $importe;
+                $detventas->monto_descuento = (0);
+                $detventas->monto_total = $total;
+                $detventas->save();
+
                 $arreglo[] = $detventas;
                 $cont = $cont + 1;
             }
+
+            $ventas->total_itbis=$titbis;//$request->get('descripcion');
+            $ventas->total_descuentos=0;//$request->get('descripcion');
+            $ventas->total_importe=$timporte;//$request->get('descripcion');
+            $ventas->total_factura=$ttotal;//$request->get('descripcion');
+
+            if ($ventas->tipo_venta = 2)
+            {
+                $cliente=clientes::findorfail($request->get('id_cliente'))->first();
+                $cliente->balance = $cliente->balance + $ventas->total_factura;
+                $cliente->update();
+            }
+
+            $ventas->update();
          
       //  $data = ['title' => 'Factura'];
      //   $data = ['venta' => $ventas];
        // $data = ['detalles' => $detventas];
-        $pdf=PDF::loadView('myPDF',['venta' => $ventas, 'detalles' => $arreglo]);
-        return $pdf->download('Factura.pdf');
+        //$pdf=PDF::loadView('myPDF',['venta' => $ventas, 'detalles' => $arreglo]);
+        //return $pdf->download('Factura.pdf');
 
-
-
-       //       DB::commit();
-       // }
-       // catch(\Exception $e)
-       // {
+            DB::commit();
+        }
+        catch(\Exception $e)
+        {
           
-         //   DB::rollback();
-       // }
+            DB::rollback();
+        }
 
- //   return redirect::to('procesos/Ventas');
+    return redirect::to('procesos/Ventas');
   }
 
     public function show($id)

@@ -47,7 +47,7 @@
 		<div class="form-group{{ $errors->has('tipoventa') ? ' has-error' : '' }}">
 			<input type="radio" name="tipoventa" value="1" onclick="Condicion()" value="true" checked /> Contado
 			<input type="radio" name="tipoventa" value="2" onclick="Condicion()" value="false" /> Credito
-			<input type="number" name="condicion" id="condicion" disabled="true" />
+			<input type="number" name="condicion" id="condicion" value="0" disabled="true" />
 		</div>
 	</div>
 </div>	
