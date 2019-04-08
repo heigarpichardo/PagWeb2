@@ -98,24 +98,13 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <?php $url = $_SERVER['REQUEST_URI']; ?>
-                <?php if ($_SERVER['REQUEST_URI'] == '/home') { ?>
-                <li><a href="direccion/ciudades"><i class="fa fa-circle-o"></i>Ciudad</a></li>
-                <li><a href="Mantenimientos/Tipopersona"><i class="fa fa-circle-o"></i>Tipo de Persona</a></li>
-                <li><a href="Mantenimientos/Tasaitbis"><i class="fa fa-circle-o"></i> Tasa Itbis</a></li>
-                <li><a href="Mantenimientos/Tipotelefono"><i class="fa fa-circle-o"></i> Tipo Telefono</a></li>
-                <li><a href="Mantenimientos/Servicios"><i class="fa fa-circle-o"></i> Servicios</a></li>
-                <li><a href="Mantenimientos/Clientes"><i class="fa fa-circle-o"></i> Clientes</a></li>
-                <li><a href="Mantenimientos/Comprobantes"><i class="fa fa-circle-o"></i> Secuencias NCF</a></li>
-              <?php } else { ?>
-                <li><a href="direccion/ciudades"><i class="fa fa-circle-o"></i>Ciudad</a></li>
-                <li><a href="Tipopersona"><i class="fa fa-circle-o"></i>Tipo de Persona</a></li>
-                <li><a href="Tasaitbis"><i class="fa fa-circle-o"></i> Tasa Itbis</a></li>
-                <li><a href="Tipotelefono"><i class="fa fa-circle-o"></i> Tipo Telefono</a></li>
-                <li><a href="Servicios"><i class="fa fa-circle-o"></i> Servicios</a></li>
-                <li><a href="Clientes"><i class="fa fa-circle-o"></i> Clientes</a></li>
-                <li><a href="Comprobantes"><i class="fa fa-circle-o"></i> Secuencias NCF</a></li>
-              <?php } ?>
+                <li><a href="{{asset('direccion/ciudades')}}"><i class="fa fa-circle-o"></i>Ciudad</a></li>
+                <li><a href="{{asset('Mantenimientos/Tipopersona')}}"><i class="fa fa-circle-o"></i>Tipo de Persona</a></li>
+                <li><a href="{{asset('Mantenimientos/Tasaitbis')}}"><i class="fa fa-circle-o"></i> Tasa Itbis</a></li>
+                <li><a href="{{asset('Mantenimientos/Tipotelefono')}}"><i class="fa fa-circle-o"></i>Tipo Telefono</a></li>
+                <li><a href="{{asset('Mantenimientos/Servicios')}}"><i class="fa fa-circle-o"></i> Servicios</a></li>
+                <li><a href="{{asset('Mantenimientos/Clientes')}}"><i class="fa fa-circle-o"></i> Clientes</a></li>
+                <li><a href="{{asset('Mantenimientos/Comprobantes')}}"><i class="fa fa-circle-o"></i>Secuencias NCF</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -125,12 +114,7 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <?php $url = $_SERVER['REQUEST_URI']; ?>
-                <?php if ($_SERVER['REQUEST_URI'] == '/home') { ?>
-                <li><a href="procesos/Ventas"><i class="fa fa-circle-o"></i>Ventas</a></li>
-              <?php } else { ?>
-                <li><a href="procesos/Ventas"><i class="fa fa-circle-o"></i>Ventas</a></li>
-              <?php } ?>
+                <li><a href="{{asset('procesos/Ventas')}}"><i class="fa fa-circle-o"></i>Ventas</a></li>
               </ul>
              </li>
             
